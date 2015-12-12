@@ -65,7 +65,6 @@ public class createScript : MonoBehaviour {
 	public GameObject tone3;
 	public GameObject tone4;
 	const int toneAmt = 4;
-
 	List<Dropdown.OptionData> addData()
 	{
 		List<Dropdown.OptionData> a = new List<Dropdown.OptionData> ();
@@ -74,7 +73,6 @@ public class createScript : MonoBehaviour {
 			b.text = i.ToString();
 			a.Add(b);
 		}
-
 
 		return a;
 	}
