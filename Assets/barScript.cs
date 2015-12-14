@@ -13,7 +13,7 @@ public class barScript : MonoBehaviour {
 	public GameObject bar;
 	bool play,stop;
 
-	//const int extraSeconds = 4;
+	//may need to look into having two bars running if needed
 
 	// Use this for initialization
 	void Start () {

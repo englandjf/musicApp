@@ -61,6 +61,7 @@ public class trackReferenceScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D a)
 	{
+		Debug.Log (Time.time);
         if(a.gameObject.name == "bar" )
 		    referenceTrack.GetComponent<barScript> ().masterPlayClick ();
 
@@ -84,7 +85,7 @@ public class trackReferenceScript : MonoBehaviour {
         {
             if (currentX >= a && currentX < a + currentGrid)
             {
-                snapPos.x = a + (currentGrid);
+                snapPos.x = a + (currentGrid+.5f);//- .5f because that is half the current scale
             }
 
         
