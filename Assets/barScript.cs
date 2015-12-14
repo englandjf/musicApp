@@ -6,6 +6,7 @@ public class barScript : MonoBehaviour {
 	Vector3 leftScreen,rightScreen;
 	float midScreen;
 	float distance;
+    float screenDistance;
 	trackVars tv;
 	globalVars gv;
 	public Camera ownerCam;
@@ -22,6 +23,7 @@ public class barScript : MonoBehaviour {
 
 
 		distance = Vector3.Distance (leftScreen, rightScreen);
+        screenDistance = distance;
 		tv = GetComponent<trackVars> ();
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
 		//sets starting position
@@ -55,7 +57,7 @@ public class barScript : MonoBehaviour {
 			float temp;
             if (this.gameObject.tag == "mainTrack")
             {
-                temp = (Time.fixedDeltaTime * distance) / (4 + gv.mainTrackLen);//adding seconds
+                temp = (Time.fixedDeltaTime * screenDistance) / (4);//speed 
             }
             else
                 temp = (Time.fixedDeltaTime * distance) / 4;//4 seconds
@@ -126,10 +128,12 @@ public class barScript : MonoBehaviour {
 		play = false;
 	}
 
+    //changes the values of the track length
+    //may need to change use of rightscreen
     public void trackLengthChanged()
     {
-        rightScreen.x += distance * (gv.mainTrackLen / 4);
-        distance += distance * (gv.mainTrackLen / 4);
+        rightScreen.x += distance*((gv.mainTrackLen-4)/4);
+        distance += distance * ((gv.mainTrackLen-4)/4);
         Debug.Log("mt" + gv.mainTrackLen);
     }
 }
