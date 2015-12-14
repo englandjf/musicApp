@@ -106,11 +106,19 @@ public class barScript : MonoBehaviour {
 	public void masterPlayClick()
 	{
 		overRidePlay = true;
+		if (play) {
+			Vector3 temp = new Vector3(leftScreen.x,midScreen,0);
+			temp.x += .05f;
+			bar.transform.position = temp;
+			GetComponentInChildren<BoxCollider2D> ().enabled = false;
+		}
 		playClicked ();
 	}
 
 	public void playClicked()
 	{
+		//reset
+
 		GetComponentInChildren<BoxCollider2D> ().enabled = true;
 		play = true;
 		stop = false;
