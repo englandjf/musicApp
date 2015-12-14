@@ -29,7 +29,7 @@ public class mainTrackScript : MonoBehaviour {
             dropChanged();
         });
 
-        trackLength.onValueChanged.AddListener(delegate
+        trackLength.onValueChange.AddListener(delegate
         {
             lengthChange();
         });

@@ -21,7 +21,7 @@ public class trackVars : MonoBehaviour {
 		mainCanvas.worldCamera = GetComponentInChildren<Camera> ();
 		if (tag == "track") {
 			musicSpeed = mainCanvas.GetComponentInChildren<InputField> ();
-			musicSpeed.onValueChanged.AddListener (delegate {
+			musicSpeed.onValueChange.AddListener (delegate {
 				updateValue ();
 			});
 			scaleNum = initValue;

@@ -11,12 +11,14 @@ public class trackReferenceScript : MonoBehaviour {
     float bottomScreen;
     float leftScreen;
     float rightScreen;
+	float distance;
 
 
     // Use this for initialization
     void Start () {
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
         getScreenInfo();
+		distance = Mathf.Abs(leftScreen - rightScreen);
 	}
 	
 	// Update is called once per frame
@@ -64,9 +66,14 @@ public class trackReferenceScript : MonoBehaviour {
 
 	}
 
-    float currentGrid = 1.0f;
+	const float secsPer = 4.0f;
+	float currentGrid; 
+	//snap by seconds
+	//4 seconds per screen width
+	//will need to grab the left side of the reference object and position it that way
     void handleSnap()
     {
+		currentGrid = distance / secsPer;
         Debug.Log("s" + rightScreen);
         //X
         Vector3 snapPos = this.transform.position;
@@ -77,8 +84,7 @@ public class trackReferenceScript : MonoBehaviour {
         {
             if (currentX >= a && currentX < a + currentGrid)
             {
-                snapPos.x = a + (currentGrid / 2);
-                Debug.Log("ewas");
+                snapPos.x = a + (currentGrid);
             }
 
         
