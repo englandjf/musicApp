@@ -12,7 +12,7 @@ public class barScript : MonoBehaviour {
 	public GameObject bar;
 	bool play,stop;
 
-	const int extraSeconds = 4;
+	//const int extraSeconds = 4;
 
 	// Use this for initialization
 	void Start () {
@@ -32,11 +32,16 @@ public class barScript : MonoBehaviour {
 		play = false;
 		stop = false;
 
-		//extend main track length
+		//extend main track length, set default;
+        /*
 		if (this.gameObject.tag == "mainTrack") {
-			rightScreen.x += distance * (extraSeconds / 4);
-			distance += distance * (extraSeconds / 4);
+            Debug.Log(" " + gv.mainTrackLen);
+
+            rightScreen.x += distance * (gv.mainTrackLen/ 4);
+			distance += distance * (gv.mainTrackLen / 4);
+            Debug.Log("DIs" + distance);
 		}
+        */
 
 		//to avoid playing first not accidentally
 		GetComponentInChildren<BoxCollider2D> ().enabled = false;
@@ -48,10 +53,12 @@ public class barScript : MonoBehaviour {
 	void FixedUpdate () {
 		if (bar.transform.position.x <= rightScreen.x - .05f && play) {
 			float temp;
-			if (this.gameObject.tag == "mainTrack")
-				temp = (Time.fixedDeltaTime * distance) / (4 + extraSeconds);//adding seconds
-			else
-				temp = (Time.fixedDeltaTime * distance) / 4;//4 seconds
+            if (this.gameObject.tag == "mainTrack")
+            {
+                temp = (Time.fixedDeltaTime * distance) / (4 + gv.mainTrackLen);//adding seconds
+            }
+            else
+                temp = (Time.fixedDeltaTime * distance) / 4;//4 seconds
 			bar.transform.Translate (temp, 0, 0);
 
 		} else if (!play) {
@@ -118,4 +125,11 @@ public class barScript : MonoBehaviour {
 		stop = true;
 		play = false;
 	}
+
+    public void trackLengthChanged()
+    {
+        rightScreen.x += distance * (gv.mainTrackLen / 4);
+        distance += distance * (gv.mainTrackLen / 4);
+        Debug.Log("mt" + gv.mainTrackLen);
+    }
 }

@@ -11,6 +11,8 @@ public class globalVars : MonoBehaviour {
 	public GameObject overObject;
 	public GameObject currentTrack;
 	int currentTrackIndex = 0;
+    public int mainTrackLen;
+
 	// Use this for initialization
 	void Start () {
 		allTracks = new GameObject[100];
@@ -23,6 +25,7 @@ public class globalVars : MonoBehaviour {
 		currentTrack = allTracks[0];
 		nextTrackPos = new Vector3 (0, 10, -10);
 		Debug.Log ("zz " + currentTrack.name);
+        mainTrackLen = 0;
 	}
 	
 	// Update is called once per frame

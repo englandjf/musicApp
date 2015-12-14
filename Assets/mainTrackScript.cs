@@ -12,6 +12,7 @@ public class mainTrackScript : MonoBehaviour {
 	float topScreen;
     Camera mainCamera;
     Dropdown subTracks;
+    InputField trackLength; 
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,7 @@ public class mainTrackScript : MonoBehaviour {
         mainCamera = GetComponentInChildren<Camera>();
         topScreen = mainCamera.ScreenToWorldPoint (new Vector3(0, Screen.height, 0)).y;
         subTracks = mainCanvas.GetComponentInChildren<Dropdown>();
+        trackLength = mainCanvas.GetComponentInChildren<InputField>();
         //clear dropdown
         List<Dropdown.OptionData> a = new List<Dropdown.OptionData>();
         subTracks.options = a;
@@ -27,6 +29,17 @@ public class mainTrackScript : MonoBehaviour {
             dropChanged();
         });
 
+        trackLength.onValueChanged.AddListener(delegate
+        {
+            lengthChange();
+        });
+
+    }
+
+    void lengthChange()
+    {
+        gv.mainTrackLen = System.Int32.Parse(trackLength.text);
+        GetComponent<barScript>().trackLengthChanged();
     }
 
     /*
