@@ -48,7 +48,7 @@ public class barScript : MonoBehaviour {
 		//to avoid playing first not accidentally
 		GetComponentInChildren<BoxCollider2D> ().enabled = false;
 
-
+		drawSecs ();
 	}
 	
 	// Update is called once per frame
@@ -144,4 +144,15 @@ public class barScript : MonoBehaviour {
         distance += distance * ((gv.mainTrackLen-4)/4);
         Debug.Log("mt" + gv.mainTrackLen);
     }
+
+	public GameObject secs;
+	void drawSecs()
+	{
+		if (this.gameObject.tag != "track") {
+			float bottomScreen = ownerCam.ScreenToWorldPoint (new Vector3 (0, 0, 10)).y;
+			float temp = distance / 4;
+			for (int i = 0; i <30; i++)
+				Instantiate (secs, new Vector3 (leftScreen.x + (temp * i), bottomScreen + .5F, 10), this.transform.rotation);
+		}
+	}
 }

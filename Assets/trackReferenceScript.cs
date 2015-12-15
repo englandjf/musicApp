@@ -74,21 +74,22 @@ public class trackReferenceScript : MonoBehaviour {
 	//will need to grab the left side of the reference object and position it that way
     void handleSnap()
     {
+		//only for testing will need to change
+		const float hardCodedLeft = -21.24112f;
+
 		currentGrid = distance / secsPer;
-        Debug.Log("s" + rightScreen);
+        Debug.Log("ls" + leftScreen);
         //X
         Vector3 snapPos = this.transform.position;
         float currentX = transform.position.x;
-        float distanceFromLeft = Mathf.Abs(leftScreen - currentX);
+        float distanceFromLeft = Mathf.Abs(hardCodedLeft - currentX);
         //there has to be a more efficient way...
-        for (float a = leftScreen; a <= rightScreen; a += currentGrid)
+        for (float a = hardCodedLeft; a <= rightScreen; a += currentGrid)
         {
             if (currentX >= a && currentX < a + currentGrid)
             {
-                snapPos.x = a + (currentGrid+.5f);//- .5f because that is half the current scale
+                snapPos.x = a + (currentGrid+1);//- .5f because that is half the current scale
             }
-
-        
         }
         //Y
         snapPos.y = Mathf.Round(snapPos.y);
@@ -96,6 +97,7 @@ public class trackReferenceScript : MonoBehaviour {
         this.transform.position = snapPos;
     }
 
+	//LEFT screen value changes when camera is moved
     void getScreenInfo()
     {
         Camera parentCam = GameObject.Find("mainTrack").GetComponentInChildren<Camera>();
