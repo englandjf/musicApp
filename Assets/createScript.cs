@@ -6,36 +6,34 @@ using UnityEngine.Events;
 
 public class createScript : MonoBehaviour {
 
-
-	bool overTone = false;
+	
 	trackVars tv;
 	globalVars gv; //for selections
-	float topScreen;
 
 	Dropdown options;
+	//default tone selection
 	int currentTone = 1;
 
 	// Use this for initialization
 	void Start () {
 		tv = GameObject.Find(this.transform.parent.name).GetComponent<trackVars> ();
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
-		topScreen = GetComponent<Camera>().ScreenToWorldPoint (new Vector3(0, Screen.height, 0)).y;
-		options = GameObject.Find(this.transform.parent.name).GetComponentInChildren<Canvas> ().GetComponentInChildren<Dropdown>() ;
 
+		//Adds the options for the dropdown list
+		options = GameObject.Find(this.transform.parent.name).GetComponentInChildren<Canvas> ().GetComponentInChildren<Dropdown>() ;
 		options.options = addData ();
+		//Adds the function to call when the drop down value is changed
 		options.onValueChanged.AddListener(delegate {
 			dropChanged();
 		});
-		Debug.Log (topScreen);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown (0) && gv.overObject == null && gv.currentTrack.Equals(this.transform.parent.gameObject)) {
 			Vector3 temp = GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,10));
-			if(temp.y <= topScreen-2)
+			if(temp.y <= tv.topScreen-2)
 			{
-				Debug.Log(temp);
 				//clean up
 				GameObject a = new GameObject();
 				if(currentTone == 1){
@@ -62,13 +60,14 @@ public class createScript : MonoBehaviour {
 
 	}
 
-	 
+	//All tones/effects that can be added to subtrack, may convert to array/list 
 	public GameObject tone1;
 	public GameObject tone2;
 	public GameObject tone3;
 	public GameObject tone4;
 	public GameObject tone5;
 	const int toneAmt = 5;
+	//Adds tones/effects to dropdown labels by index, will convert to name
 	List<Dropdown.OptionData> addData()
 	{
 		List<Dropdown.OptionData> a = new List<Dropdown.OptionData> ();
@@ -81,6 +80,7 @@ public class createScript : MonoBehaviour {
 		return a;
 	}
 
+	//Called when dropdown value option is changed
 	private void dropChanged()
 	{
 		currentTone = options.value+1;
