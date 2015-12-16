@@ -12,6 +12,7 @@ public class trackReferenceScript : MonoBehaviour {
     float leftScreen;
     float rightScreen;
 	float distance;
+	float currentScale;//set to the distance from the left side of the screen to the right because subtracks are only 4 seconds currently
 
 
     // Use this for initialization
@@ -19,6 +20,10 @@ public class trackReferenceScript : MonoBehaviour {
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
         getScreenInfo();
 		distance = Mathf.Abs(leftScreen - rightScreen);
+		currentScale = distance;
+
+		this.transform.localScale = new Vector3 (currentScale, 1, 1);
+		//this.transform.localPosition = new Vector3 (distance / 2, 0, 0);
 	}
 	
 	// Update is called once per frame
@@ -81,7 +86,7 @@ public class trackReferenceScript : MonoBehaviour {
         Debug.Log("ls" + leftScreen);
         //X
         Vector3 snapPos = this.transform.position;
-        float currentX = transform.position.x;
+        float currentX = transform.position.x - (currentScale/2);//to get left side of object
         float distanceFromLeft = Mathf.Abs(hardCodedLeft - currentX);
         //there has to be a more efficient way...
         for (float a = hardCodedLeft; a <= rightScreen; a += currentGrid)

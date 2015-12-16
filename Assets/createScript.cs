@@ -50,6 +50,9 @@ public class createScript : MonoBehaviour {
 				else if(currentTone == 4){
 					a = (GameObject)Instantiate(tone4,temp,this.gameObject.transform.rotation);
 				}
+				else if(currentTone == 5){
+					a = (GameObject)Instantiate(tone5,temp,this.gameObject.transform.rotation);
+				}
 				a.GetComponent<hitScript>().parentName = this.transform.parent.gameObject.name;
 
 			}
@@ -64,11 +67,12 @@ public class createScript : MonoBehaviour {
 	public GameObject tone2;
 	public GameObject tone3;
 	public GameObject tone4;
-	const int toneAmt = 4;
+	public GameObject tone5;
+	const int toneAmt = 5;
 	List<Dropdown.OptionData> addData()
 	{
 		List<Dropdown.OptionData> a = new List<Dropdown.OptionData> ();
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <= toneAmt; i++) {
 			Dropdown.OptionData b = new Dropdown.OptionData ();
 			b.text = i.ToString();
 			a.Add(b);
