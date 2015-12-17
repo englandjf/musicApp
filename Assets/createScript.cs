@@ -51,6 +51,9 @@ public class createScript : MonoBehaviour {
 				else if(currentTone == 5){
 					a = (GameObject)Instantiate(tone5,temp,this.gameObject.transform.rotation);
 				}
+				else if(currentTone == 6){
+					a = (GameObject)Instantiate(tone6,temp,this.gameObject.transform.rotation);
+				}
 				a.GetComponent<hitScript>().parentName = this.transform.parent.gameObject.name;
 
 			}
@@ -66,7 +69,8 @@ public class createScript : MonoBehaviour {
 	public GameObject tone3;
 	public GameObject tone4;
 	public GameObject tone5;
-	const int toneAmt = 5;
+	public GameObject tone6;
+	const int toneAmt = 6;
 	//Adds tones/effects to dropdown labels by index, will convert to name
 	List<Dropdown.OptionData> addData()
 	{
