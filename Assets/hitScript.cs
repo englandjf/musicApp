@@ -3,6 +3,8 @@ using System.Collections;
 
 public class hitScript : MonoBehaviour {
 
+	//piano https://www.freesound.org/people/jobro/packs/2489/?page=1#sound
+
 	//Effect that will be played when object is hit
 	AudioSource noise;
 	//True if object has been placed after initial creation

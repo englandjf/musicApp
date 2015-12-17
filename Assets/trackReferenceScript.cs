@@ -7,6 +7,7 @@ public class trackReferenceScript : MonoBehaviour {
 	bool placed = false;
 	bool mouseOver = false;
 	globalVars gv;
+	trackVars tv;
     float topScreen;
     float bottomScreen;
     float leftScreen;
@@ -18,6 +19,7 @@ public class trackReferenceScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
+		tv = GameObject.Find ("mainTrack").GetComponent<trackVars> ();
         getScreenInfo();
 		distance = Mathf.Abs(leftScreen - rightScreen);
 		currentScale = distance;
@@ -51,7 +53,7 @@ public class trackReferenceScript : MonoBehaviour {
 		}
 
 	}
-
+	
 	void OnMouseOver()
 	{
 		mouseOver = true;
@@ -69,7 +71,6 @@ public class trackReferenceScript : MonoBehaviour {
 		Debug.Log (Time.time);
         if(a.gameObject.name == "bar" )
 		    referenceTrack.GetComponent<barScript> ().masterPlayClick ();
-
 	}
 
 	const float secsPer = 10.0f;
@@ -79,8 +80,6 @@ public class trackReferenceScript : MonoBehaviour {
 	//will need to grab the left side of the reference object and position it that way
     void handleSnap()
     {
-		//only for testing will need to change
-		const float hardCodedLeft = -21.24112f;
 
 		currentGrid = distance / secsPer;
 		Debug.Log("ds " + distance);
@@ -90,20 +89,21 @@ public class trackReferenceScript : MonoBehaviour {
 		float currentX = transform.position.x ;//- (currentScale/2);//to get left side of object, may change by adding empty to set origin
         //float distanceFromLeft = Mathf.Abs(hardCodedLeft) - Mathf.Abs(currentX);
         //there has to be a more efficient way...
-        for (float a = hardCodedLeft; a <= rightScreen; a += currentGrid)
+		for (float a = tv.leftScreen; a <= rightScreen; a += currentGrid)
         {
             if (currentX >= a && currentX < a + currentGrid)
             {
-                snapPos.x = a + (currentGrid);//- .5f because that is half the current scale
+                snapPos.x = a + (currentGrid+.5f);//- .5f because that is half the current scale
             }
         }
         //Y
         snapPos.y = Mathf.Round(snapPos.y);
 
         this.transform.position = snapPos;
+
     }
 
-	//LEFT screen value changes when camera is moved
+
     void getScreenInfo()
     {
         Camera parentCam = GameObject.Find("mainTrack").GetComponentInChildren<Camera>();

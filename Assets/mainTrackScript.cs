@@ -55,7 +55,7 @@ public class mainTrackScript : MonoBehaviour {
 			if(temp.y <= topScreen -2){
 				GameObject refOb = (GameObject)Instantiate(trackRef,temp,this.transform.rotation);
                 Debug.Log(subTracks.value);
-				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(subTracks.value+1);
+				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(subTracks.value+1); 
 			}
 			//Set which object it is referring to
 

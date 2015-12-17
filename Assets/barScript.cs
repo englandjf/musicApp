@@ -134,8 +134,9 @@ public class barScript : MonoBehaviour {
 		if (this.gameObject.tag != "track") {
 			float bottomScreen = ownerCam.ScreenToWorldPoint (new Vector3 (0, 0, 10)).y;
 			float temp = distance / lrSeconds;
+			Debug.Log("bar " + temp);
 			for (int i = 0; i <30; i++)
-				Instantiate (secs, new Vector3 (leftScreen.x + (temp * i), bottomScreen + .5F, 10), this.transform.rotation);
+				Instantiate (secs, new Vector3 (leftScreen.x + (temp * i), bottomScreen + .5F, 10), this.transform.rotation);//curently hardcoded left screen
 		}
 	}
 }

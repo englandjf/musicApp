@@ -12,6 +12,7 @@ public class globalVars : MonoBehaviour {
 	public GameObject currentTrack;
 	int currentTrackIndex = 0;
     public int mainTrackLen;//will need to handle what to do if not div by 4
+	
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +29,7 @@ public class globalVars : MonoBehaviour {
         mainTrackLen = 4;
 	}
 	
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.UpArrow)){
