@@ -121,10 +121,11 @@ public class barScript : MonoBehaviour {
 
     //changes the values of the track length
     //may need to change use of rightscreen
+	//currently on works with divisibles of 10?
     public void trackLengthChanged()
     {
-        rightScreen.x += distance*((gv.mainTrackLen-4)/4);
-        distance += distance * ((gv.mainTrackLen-4)/4);
+        rightScreen.x += distance*((gv.mainTrackLen-lrSeconds)/lrSeconds);
+        distance += distance * ((gv.mainTrackLen-lrSeconds)/lrSeconds);
         Debug.Log("mt" + gv.mainTrackLen);
     }
 

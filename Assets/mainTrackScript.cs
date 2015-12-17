@@ -35,7 +35,7 @@ public class mainTrackScript : MonoBehaviour {
         });
 
     }
-
+	
     void lengthChange()
     {
         gv.mainTrackLen = System.Int32.Parse(trackLength.text);
