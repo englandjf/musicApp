@@ -34,30 +34,21 @@ public class barScript : MonoBehaviour {
 		play = false;
 		stop = false;
 
-		//extend main track length, set default;
-        /*
-		if (this.gameObject.tag == "mainTrack") {
-            Debug.Log(" " + gv.mainTrackLen);
-
-            rightScreen.x += distance * (gv.mainTrackLen/ 4);
-			distance += distance * (gv.mainTrackLen / 4);
-            Debug.Log("DIs" + distance);
-		}
-        */
-
 		//to avoid playing first not accidentally
 		GetComponentInChildren<BoxCollider2D> ().enabled = false;
 
 		drawSecs ();
 	}
-	
+
+	//time from left to right
+	const int lrSeconds = 10;
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (bar.transform.position.x <= rightScreen.x - .05f && play) {
 			float temp;
             if (this.gameObject.tag == "mainTrack")
             {
-                temp = (Time.fixedDeltaTime * screenDistance) / (4);//speed 
+				temp = (Time.fixedDeltaTime * screenDistance) / lrSeconds;
             }
             else
                 temp = (Time.fixedDeltaTime * distance) / 4;//4 seconds
@@ -76,14 +67,6 @@ public class barScript : MonoBehaviour {
 				temp.x += .05f;
 				bar.transform.position = temp;
 			}
-			/*
-			if(this.gameObject.tag == "mainTrack"){
-				Debug.Log(Time.time);
-				Vector3 temp = new Vector3(leftScreen.x,midScreen,0);
-				temp.x += .05f;
-				bar.transform.position = temp;
-			}
-			*/
 		}
 
 		if (stop == true) {
@@ -150,7 +133,7 @@ public class barScript : MonoBehaviour {
 	{
 		if (this.gameObject.tag != "track") {
 			float bottomScreen = ownerCam.ScreenToWorldPoint (new Vector3 (0, 0, 10)).y;
-			float temp = distance / 4;
+			float temp = distance / lrSeconds;
 			for (int i = 0; i <30; i++)
 				Instantiate (secs, new Vector3 (leftScreen.x + (temp * i), bottomScreen + .5F, 10), this.transform.rotation);
 		}

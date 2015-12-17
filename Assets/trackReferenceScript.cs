@@ -22,7 +22,7 @@ public class trackReferenceScript : MonoBehaviour {
 		distance = Mathf.Abs(leftScreen - rightScreen);
 		currentScale = distance;
 
-		this.transform.localScale = new Vector3 (currentScale, 1, 1);
+		//this.transform.localScale = new Vector3 (currentScale, 1, 1);
 		//this.transform.localPosition = new Vector3 (distance / 2, 0, 0);
 	}
 	
@@ -72,7 +72,7 @@ public class trackReferenceScript : MonoBehaviour {
 
 	}
 
-	const float secsPer = 4.0f;
+	const float secsPer = 10.0f;
 	float currentGrid; 
 	//snap by seconds
 	//4 seconds per screen width
@@ -83,17 +83,18 @@ public class trackReferenceScript : MonoBehaviour {
 		const float hardCodedLeft = -21.24112f;
 
 		currentGrid = distance / secsPer;
-        Debug.Log("ls" + leftScreen);
+		Debug.Log("ds " + distance);
+        Debug.Log("cg " + currentGrid);
         //X
         Vector3 snapPos = this.transform.position;
-        float currentX = transform.position.x - (currentScale/2);//to get left side of object
-        float distanceFromLeft = Mathf.Abs(hardCodedLeft - currentX);
+		float currentX = transform.position.x ;//- (currentScale/2);//to get left side of object, may change by adding empty to set origin
+        //float distanceFromLeft = Mathf.Abs(hardCodedLeft) - Mathf.Abs(currentX);
         //there has to be a more efficient way...
         for (float a = hardCodedLeft; a <= rightScreen; a += currentGrid)
         {
             if (currentX >= a && currentX < a + currentGrid)
             {
-                snapPos.x = a + (currentGrid+1);//- .5f because that is half the current scale
+                snapPos.x = a + (currentGrid);//- .5f because that is half the current scale
             }
         }
         //Y
