@@ -11,7 +11,7 @@ public class mainTrackScript : MonoBehaviour {
 	globalVars gv;
 	float topScreen;
     Camera mainCamera;
-    Dropdown subTracks;
+    Dropdown menuOptions;
     InputField trackLength; 
 
 	// Use this for initialization
@@ -20,12 +20,18 @@ public class mainTrackScript : MonoBehaviour {
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
         mainCamera = GetComponentInChildren<Camera>();
         topScreen = mainCamera.ScreenToWorldPoint (new Vector3(0, Screen.height, 0)).y;
-        subTracks = mainCanvas.GetComponentInChildren<Dropdown>();
+        menuOptions = mainCanvas.GetComponentInChildren<Dropdown>();
         trackLength = mainCanvas.GetComponentInChildren<InputField>();
         //clear dropdown
-        List<Dropdown.OptionData> a = new List<Dropdown.OptionData>();
-        subTracks.options = a;
-        subTracks.onValueChanged.AddListener(delegate {
+        menuOptions.options = new List<Dropdown.OptionData>();
+		//Ad sub options
+		Dropdown.OptionData st = new Dropdown.OptionData ("Sub Tracks");
+		menuOptions.options.Add (st);
+		Dropdown.OptionData ss = new Dropdown.OptionData ("Sounds");
+		menuOptions.options.Add (ss);
+		menuOptions.value = 1;
+        //subTracks.options = a;
+        menuOptions.onValueChanged.AddListener(delegate {
             dropChanged();
         });
 
@@ -33,6 +39,11 @@ public class mainTrackScript : MonoBehaviour {
         {
             lengthChange();
         });
+
+		subTracks = new List<Dropdown.OptionData> ();
+		//subTracks.onValueChanged.AddListener(delegate {
+		//	dropChanged();
+		//});
 
     }
 	
@@ -54,8 +65,8 @@ public class mainTrackScript : MonoBehaviour {
 			Vector3 temp = GetComponentInChildren<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,10));
 			if(temp.y <= topScreen -2){
 				GameObject refOb = (GameObject)Instantiate(trackRef,temp,this.transform.rotation);
-                Debug.Log(subTracks.value);
-				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(subTracks.value+1); 
+                Debug.Log(menuOptions.value);
+				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(menuOptions.value+1); 
 			}
 			//Set which object it is referring to
 
@@ -74,19 +85,23 @@ public class mainTrackScript : MonoBehaviour {
         }
 
     }
-
+	
 	public void addTrack()
 	{
 		gv.trackAdded (Instantiate (beatTrack, gv.nextTrackPos, this.transform.rotation));
         Dropdown.OptionData b = new Dropdown.OptionData();
         b.text = (gv.nextTrackIndex - 1).ToString();
-        subTracks.options.Add(b);
-        subTracks.value = gv.nextTrackIndex - 1;
+        subTracks.Add(b);
+        menuOptions.value = gv.nextTrackIndex - 1;
 
 	}
 
+	List<Dropdown.OptionData> subTracks;
     void dropChanged()
     {
+		//Menus->Sub Menus
+		//if(menuOptions.value == 0)
+
     }
 
 
