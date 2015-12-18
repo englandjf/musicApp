@@ -23,14 +23,13 @@ public class mainTrackScript : MonoBehaviour {
         menuOptions = mainCanvas.GetComponentInChildren<Dropdown>();
         trackLength = mainCanvas.GetComponentInChildren<InputField>();
         //clear dropdown
-        menuOptions.options = new List<Dropdown.OptionData>();
-		//Ad sub options
-		Dropdown.OptionData st = new Dropdown.OptionData ("Sub Tracks");
-		menuOptions.options.Add (st);
-		Dropdown.OptionData ss = new Dropdown.OptionData ("Sounds");
-		menuOptions.options.Add (ss);
+        mainMenu = new List<Dropdown.OptionData>();
+		//Add menu options
+	    mainMenu.Add (new Dropdown.OptionData("Sub Tracks"));
+		mainMenu.Add (new Dropdown.OptionData("Sounds"));
+        menuOptions.options = mainMenu;
 		menuOptions.value = 1;
-        //subTracks.options = a;
+
         menuOptions.onValueChanged.AddListener(delegate {
             dropChanged();
         });
@@ -41,9 +40,8 @@ public class mainTrackScript : MonoBehaviour {
         });
 
 		subTracks = new List<Dropdown.OptionData> ();
-		//subTracks.onValueChanged.AddListener(delegate {
-		//	dropChanged();
-		//});
+        //will need to add later
+        subTracks.Add(new Dropdown.OptionData("Back"));
 
     }
 	
@@ -66,7 +64,7 @@ public class mainTrackScript : MonoBehaviour {
 			if(temp.y <= topScreen -2){
 				GameObject refOb = (GameObject)Instantiate(trackRef,temp,this.transform.rotation);
                 Debug.Log(menuOptions.value);
-				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(menuOptions.value+1); 
+				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(menuOptions.value); 
 			}
 			//Set which object it is referring to
 
@@ -92,15 +90,41 @@ public class mainTrackScript : MonoBehaviour {
         Dropdown.OptionData b = new Dropdown.OptionData();
         b.text = (gv.nextTrackIndex - 1).ToString();
         subTracks.Add(b);
+        menuOptions.options = subTracks;
+        inSub = true;
         menuOptions.value = gv.nextTrackIndex - 1;
+
 
 	}
 
-	List<Dropdown.OptionData> subTracks;
+    //first layer of menu
+    List<Dropdown.OptionData> mainMenu;
+    //second layer of menu
+    List<Dropdown.OptionData> subTracks;
+    //True if in second layer
+    bool inSub = false;
     void dropChanged()
     {
 		//Menus->Sub Menus
-		//if(menuOptions.value == 0)
+		if(menuOptions.value == 0)
+        {
+            //into submenu only if a track has been added
+            if (!inSub && gv.nextTrackIndex > 1)
+            {
+                menuOptions.options = subTracks;
+                inSub = true;
+            }
+            else {
+                menuOptions.options = mainMenu;
+                inSub = false;
+            }
+        }
+        //second option, other sound effects
+        else if(menuOptions.value == 1)
+        {
+
+        }
+
 
     }
 
