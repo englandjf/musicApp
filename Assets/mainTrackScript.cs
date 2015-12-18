@@ -12,7 +12,10 @@ public class mainTrackScript : MonoBehaviour {
 	float topScreen;
     Camera mainCamera;
     Dropdown menuOptions;
-    InputField trackLength; 
+    InputField trackLength;
+
+	//Will need to look into options for having sounds/beats in the cloud
+	public AudioClip[] extraSounds;
 
 	// Use this for initialization
 	void Start () {
@@ -22,26 +25,13 @@ public class mainTrackScript : MonoBehaviour {
         topScreen = mainCamera.ScreenToWorldPoint (new Vector3(0, Screen.height, 0)).y;
         menuOptions = mainCanvas.GetComponentInChildren<Dropdown>();
         trackLength = mainCanvas.GetComponentInChildren<InputField>();
-        //clear dropdown
-        mainMenu = new List<Dropdown.OptionData>();
-		//Add menu options
-	    mainMenu.Add (new Dropdown.OptionData("Sub Tracks"));
-		mainMenu.Add (new Dropdown.OptionData("Sounds"));
-        menuOptions.options = mainMenu;
-		menuOptions.value = 1;
-
-        menuOptions.onValueChanged.AddListener(delegate {
-            dropChanged();
-        });
 
         trackLength.onValueChange.AddListener(delegate
         {
             lengthChange();
         });
 
-		subTracks = new List<Dropdown.OptionData> ();
-        //will need to add later
-        subTracks.Add(new Dropdown.OptionData("Back"));
+		setupMenu ();
 
     }
 	
@@ -63,8 +53,13 @@ public class mainTrackScript : MonoBehaviour {
 			Vector3 temp = GetComponentInChildren<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,10));
 			if(temp.y <= topScreen -2){
 				GameObject refOb = (GameObject)Instantiate(trackRef,temp,this.transform.rotation);
-                Debug.Log(menuOptions.value);
-				refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(menuOptions.value); 
+				if(inMenu == currentMenu.sub){
+					refOb.GetComponent<trackReferenceScript>().referenceTrack = gv.getIndex(menuOptions.value); 
+				}
+				else if(inMenu == currentMenu.sound)
+				{
+					refOb.GetComponent<trackReferenceScript>().referenceClip = extraSounds[menuOptions.value-1];
+				}
 			}
 			//Set which object it is referring to
 
@@ -91,7 +86,7 @@ public class mainTrackScript : MonoBehaviour {
         b.text = (gv.nextTrackIndex - 1).ToString();
         subTracks.Add(b);
         menuOptions.options = subTracks;
-        inSub = true;
+		inMenu = currentMenu.sub;
         menuOptions.value = gv.nextTrackIndex - 1;
 
 
@@ -102,31 +97,68 @@ public class mainTrackScript : MonoBehaviour {
     //second layer of menu
     List<Dropdown.OptionData> subTracks;
     //True if in second layer
-    bool inSub = false;
+	List<Dropdown.OptionData> soundMenu;
+	//Enums for menu navigation
+	enum currentMenu{main,sub,sound};
+	currentMenu inMenu;
     void dropChanged()
     {
 		//Menus->Sub Menus
 		if(menuOptions.value == 0)
         {
             //into submenu only if a track has been added
-            if (!inSub && gv.nextTrackIndex > 1)
+            if (inMenu != currentMenu.sub && gv.nextTrackIndex > 1)
             {
                 menuOptions.options = subTracks;
-                inSub = true;
+				inMenu = currentMenu.sub;
             }
+			//Go back
             else {
                 menuOptions.options = mainMenu;
-                inSub = false;
+				inMenu = currentMenu.main;
             }
         }
         //second option, other sound effects
         else if(menuOptions.value == 1)
         {
-
+			//into submenu only if a track has been added
+			if (inMenu == currentMenu.main)
+			{
+				menuOptions.options = soundMenu;
+				inMenu = currentMenu.sound;
+			}
         }
 
 
     }
+
+	void setupMenu()
+	{
+		//Main menu
+		mainMenu = new List<Dropdown.OptionData>();
+		//Add menu options
+		mainMenu.Add (new Dropdown.OptionData("Sub Tracks"));
+		mainMenu.Add (new Dropdown.OptionData("Sounds"));
+		menuOptions.options = mainMenu;
+		menuOptions.value = 1;
+		menuOptions.onValueChanged.AddListener(delegate {
+			dropChanged();
+		});
+		inMenu = currentMenu.main;
+
+		//Sub track menu
+		subTracks = new List<Dropdown.OptionData> ();
+		subTracks.Add(new Dropdown.OptionData("Back"));
+
+		//Sound menu
+		soundMenu = new List<Dropdown.OptionData> ();
+		soundMenu.Add(new Dropdown.OptionData("Back"));
+		for (int i = 1; i <= extraSounds.Length; i++) {
+			soundMenu.Add(new Dropdown.OptionData(i.ToString()));
+		}
+
+	}
+	
 
 
 }

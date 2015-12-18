@@ -3,7 +3,11 @@ using System.Collections;
 
 public class trackReferenceScript : MonoBehaviour {
 
+	//Two options for reference
 	public GameObject referenceTrack;
+	public AudioClip referenceClip;
+	AudioSource referenceSound;
+
 	bool placed = false;
 	bool mouseOver = false;
 	globalVars gv;
@@ -14,7 +18,7 @@ public class trackReferenceScript : MonoBehaviour {
     float rightScreen;
 	float distance;
 	float currentScale;//set to the distance from the left side of the screen to the right because subtracks are only 4 seconds currently
-
+	
 
     // Use this for initialization
     void Start () {
@@ -26,6 +30,13 @@ public class trackReferenceScript : MonoBehaviour {
 
 		//this.transform.localScale = new Vector3 (currentScale, 1, 1);
 		//this.transform.localPosition = new Vector3 (distance / 2, 0, 0);
+
+		referenceSound = gameObject.AddComponent<AudioSource> ();
+		referenceSound.clip = referenceClip;
+
+		/*
+		 * Add submenu access to effects, echo, distortio, set length. Possobly on double click
+		*/
 	}
 	
 	// Update is called once per frame
@@ -69,8 +80,15 @@ public class trackReferenceScript : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D a)
 	{
 		Debug.Log (Time.time);
-        if(a.gameObject.name == "bar" )
-		    referenceTrack.GetComponent<barScript> ().masterPlayClick ();
+        if (a.gameObject.name == "bar") {
+			//Referring to subtrack
+			if(referenceTrack != null)
+				referenceTrack.GetComponent<barScript> ().masterPlayClick ();
+			//Referring to sound
+			else{
+				referenceSound.Play();
+			}
+		}
 	}
 
 	const float secsPer = 10.0f;

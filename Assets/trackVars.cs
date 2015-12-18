@@ -8,15 +8,17 @@ public class trackVars : MonoBehaviour {
 	InputField musicSpeed;
 	public Text bpm;
 	public int trackLength = 4;
-	public int scaleNum;
+	public float scaleNum;
 
 	//Add screen dimensions
 	public float topScreen,rightScreen,bottomScreen,leftScreen;
 	public Camera subCamera;
 	
-	
-	const int initValue = 1;//bps
-	int currentValue;
+	//should automatically choose track length end
+	//based on how many notes have been placed/played
+
+	const float initValue = 1;//bps
+	float currentValue;
 
 	// Use this for initialization
 	void Start () {
@@ -52,8 +54,10 @@ public class trackVars : MonoBehaviour {
 
 	void updateValue()
 	{
-		if(tag == "track")
-			currentValue = System.Int32.Parse (musicSpeed.text)/60;
+		if (tag == "track") {
+			currentValue = (float)System.Int32.Parse (musicSpeed.text) / 60;
+			Debug.Log(currentValue);
+		}
 	}
 
 	//Used by all components of subtrack

@@ -18,6 +18,8 @@ public class hitScript : MonoBehaviour {
 	//might change
 	public string parentName;
 
+	
+
 	// Use this for initialization
 	void Start () {
 
@@ -25,6 +27,7 @@ public class hitScript : MonoBehaviour {
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
 		noise = gameObject.GetComponentInChildren<AudioSource> ();
 		changeScale ();
+
 	}
 	
 	// Update is called once per frame
@@ -65,6 +68,8 @@ public class hitScript : MonoBehaviour {
 	{
 			noise.Play ();
 	}
+
+
 
 	float blockScaleNum;
 	//Camera parentCam;
