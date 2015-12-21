@@ -31,7 +31,7 @@ public class createScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0) && gv.overObject == null && gv.currentTrack.Equals(this.transform.parent.gameObject)) {
+		if (Input.GetMouseButtonDown (0) && gv.overObject == null && gv.currentTrack.Equals(this.transform.parent.gameObject) && !tv.editing) {
 			Vector3 temp = GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,10));
 			if(temp.y <= tv.topScreen-2)
 			{

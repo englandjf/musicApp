@@ -23,6 +23,9 @@ public class trackVars : MonoBehaviour {
 	//Reference to edit menu used by all beats
 	public GameObject editSound;
 
+	//true if in edit menu
+	public bool editing = false;
+
 	// Use this for initialization
 	void Start () {
 		//Get screen dimensions

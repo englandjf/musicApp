@@ -4,9 +4,9 @@ using System.Collections;
 public class editSoundScript : MonoBehaviour {
 
 	//Reference to the subtrack
-	GameObject subRef;
+	public GameObject subRef;
 	//Reference to the sound itself
-	GameObject soundRef;
+	public GameObject soundRef;
 	globalVars gv;
 
 	// Use this for initialization
@@ -22,4 +22,13 @@ public class editSoundScript : MonoBehaviour {
 	//When a double click occurs on the sound, set canvas and camera to false on the track
 	//Set canvas and camera enabled on the setttings page
 	//May need different menus for trackRef and beats, beats first
+
+	public void backTotrack()
+	{
+		GetComponentInChildren<Camera> ().enabled = false;
+		GetComponentInChildren<Canvas> ().enabled = false;
+		subRef.GetComponentInChildren<Camera> ().enabled = true;
+		subRef.GetComponentInChildren<Canvas> ().enabled = true;
+		subRef.GetComponent<trackVars> ().editing = false;
+	}
 }

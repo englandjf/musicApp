@@ -19,7 +19,7 @@ public class hitScript : MonoBehaviour {
 	bool oneClick = false;
 	bool timerRunning;
 	float timeDC;
-	float delay = 1.0f;
+	float delay = .25f;
 
 	//might change
 	public string parentName;
@@ -79,6 +79,12 @@ public class hitScript : MonoBehaviour {
 				//double click true
 				Debug.Log("DC");
 				oneClick = false;
+				GameObject.Find (parentName).GetComponentInChildren<Camera>().enabled = false;
+				GameObject.Find (parentName).GetComponentInChildren<Camera>().enabled = false;
+				tv.editSound.GetComponentInChildren<Camera>().enabled = true;
+				tv.editSound.GetComponentInChildren<Canvas>().enabled = true;
+				tv.editing = true;
+				//add sound reference too
 			}
 		}
 
