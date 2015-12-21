@@ -15,6 +15,12 @@ public class hitScript : MonoBehaviour {
 	trackVars tv;
 	globalVars gv; //for selection
 
+	//For double click
+	bool oneClick = false;
+	bool timerRunning;
+	float timeDC;
+	float delay = 1.0f;
+
 	//might change
 	public string parentName;
 
@@ -57,10 +63,29 @@ public class hitScript : MonoBehaviour {
 
 		//Moves if already placed
 		if (Input.GetMouseButton (0) && placed == true && mouseOver == true) {
+
 			Vector3 temp = tv.subCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,10));
 			if(temp.y < tv.topScreen -2)
 				transform.position = temp;
 		}
+
+		//Double click
+		if (Input.GetMouseButtonDown (0)) {
+			//Check for double click
+			if (!oneClick) {
+				oneClick = true;
+				timeDC = Time.time;
+			} else {
+				//double click true
+				Debug.Log("DC");
+				oneClick = false;
+			}
+		}
+
+
+		//Reset double click
+		if (oneClick && (Time.time - timeDC) > delay)
+			oneClick = false;
 	}
 
 	//When object is hit by the bar

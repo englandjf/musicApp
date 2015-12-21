@@ -20,6 +20,9 @@ public class trackVars : MonoBehaviour {
 	const float initValue = 1;//bps
 	float currentValue;
 
+	//Reference to edit menu used by all beats
+	public GameObject editSound;
+
 	// Use this for initialization
 	void Start () {
 		//Get screen dimensions

@@ -8,6 +8,7 @@ public class mainTrackScript : MonoBehaviour {
 	Canvas mainCanvas;
 	public GameObject beatTrack;
 	public GameObject trackRef;
+	public GameObject editRef;
 	globalVars gv;
 	float topScreen;
     Camera mainCamera;
@@ -81,7 +82,9 @@ public class mainTrackScript : MonoBehaviour {
 	
 	public void addTrack()
 	{
-		gv.trackAdded (Instantiate (beatTrack, gv.nextTrackPos, this.transform.rotation));
+		//Sub track
+		GameObject tempSub = (GameObject)Instantiate (beatTrack, gv.nextTrackPos, this.transform.rotation);
+		gv.trackAdded (tempSub);
         Dropdown.OptionData b = new Dropdown.OptionData();
         b.text = (gv.nextTrackIndex - 1).ToString();
         subTracks.Add(b);
@@ -89,7 +92,11 @@ public class mainTrackScript : MonoBehaviour {
 		inMenu = currentMenu.sub;
         menuOptions.value = gv.nextTrackIndex - 1;
 
-
+		//Edit Menu
+		GameObject tempEdit = (GameObject)Instantiate (editRef, new Vector3(tempSub.transform.position.x-50,tempSub.transform.position.y,tempSub.transform.position.z), this.transform.rotation);
+		//Disable camera & canvas
+		tempEdit.GetComponentInChildren<Camera> ().enabled = false;
+		tempEdit.GetComponentInChildren<Canvas> ().enabled = false;
 	}
 
     //first layer of menu

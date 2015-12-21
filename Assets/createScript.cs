@@ -20,6 +20,7 @@ public class createScript : MonoBehaviour {
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
 
 		//Adds the options for the dropdown list
+		Debug.Log ("p " + this.name);
 		options = GameObject.Find(this.transform.parent.name).GetComponentInChildren<Canvas> ().GetComponentInChildren<Dropdown>() ;
 		options.options = addData ();
 		//Adds the function to call when the drop down value is changed
