@@ -7,7 +7,7 @@ public class trackVars : MonoBehaviour {
 
 	InputField musicSpeed;
 	public Text bpm;
-	public int trackLength = 4;
+	public int trackLength = 4;//how many beats
 	public float scaleNum;
 
 	//Add screen dimensions
@@ -25,6 +25,7 @@ public class trackVars : MonoBehaviour {
 
 	//true if in edit menu
 	public bool editing = false;
+	
 
 	// Use this for initialization
 	void Start () {
@@ -45,24 +46,38 @@ public class trackVars : MonoBehaviour {
 			//disable camera & canvas on creation
 			GetComponentInChildren<Camera>().enabled = false;
 			GetComponentInChildren<Canvas>().enabled = false;
+
 		}
 
 
 	}
+
+	//60 bpm is 1 beat/second
+	//120 bpm is 2 beats/second
 	
 	// Update is called once per frame
 	void Update () {
 		if (tag == "track") {
 			scaleNum = currentValue * 4;
 			bpm.text = Mathf.Round (scaleNum * 15).ToString ();
+			if(changedBPM && !updateSettings){
+				GetComponent<barScript>().changeSubSettings();
+				updateSettings = true;
+			}
 		}
+
 	}
 
+	bool changedBPM = false;
+	bool updateSettings = false;
 	void updateValue()
 	{
 		if (tag == "track") {
 			currentValue = (float)System.Int32.Parse (musicSpeed.text) / 60;
 			Debug.Log(currentValue);
+			changedBPM = true;
+			updateSettings = false;
+			//will need something to scale with bpm for length
 		}
 	}
 

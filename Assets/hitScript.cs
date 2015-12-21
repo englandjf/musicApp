@@ -114,7 +114,6 @@ public class hitScript : MonoBehaviour {
 		Vector3 temp = transform.localScale;
 		temp.x = blockScaleNum;
 		transform.localScale = temp;
-
 	}
 
 	void handleSnap()

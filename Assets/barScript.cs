@@ -14,6 +14,8 @@ public class barScript : MonoBehaviour {
 	bool play,stop;
 
 	//may need to look into having two bars running if needed
+	//Track length should be in beats
+	//beat size * beats = track length
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +25,7 @@ public class barScript : MonoBehaviour {
 
 
 		distance = Vector3.Distance (leftScreen, rightScreen);
-        screenDistance = distance;
+        screenDistance = distance;//for constant speed
 		tv = GetComponent<trackVars> ();
 		gv = GameObject.Find ("computer").GetComponent<globalVars> ();
 		//sets starting position
@@ -38,6 +40,10 @@ public class barScript : MonoBehaviour {
 		GetComponentInChildren<BoxCollider2D> ().enabled = false;
 
 		drawSecs ();
+
+		//Set special features for subtracks
+		if(this.gameObject.tag == "track")
+			subTrackSpecial ();
 	}
 
 	//time from left to right
@@ -51,7 +57,7 @@ public class barScript : MonoBehaviour {
 				temp = (Time.fixedDeltaTime * screenDistance) / lrSeconds;
             }
             else
-                temp = (Time.fixedDeltaTime * distance) / 4;//4 seconds
+                temp = (Time.fixedDeltaTime * screenDistance) / 4;//4 seconds
 			bar.transform.Translate (temp, 0, 0);
 
 		} else if (!play) {
@@ -138,6 +144,42 @@ public class barScript : MonoBehaviour {
 			Debug.Log("bar " + temp);
 			for (int i = 0; i <30; i++)
 				Instantiate (secs, new Vector3 (leftScreen.x + (temp * i), bottomScreen + .5F, 10), this.transform.rotation);//curently hardcoded left screen
+		}
+	}
+
+	float blockScaleNum;
+	void subTrackSpecial()
+	{
+
+		//set right screen/ subtrack length/ beat amount
+		//left screen = beat size * beats
+		//float bps = tv.bpm / 60;
+		//blockScaleNum = screenDistance / tv.bpm
+		//leftScreen.x += blockScaleNum * 4;
+		//Debug.Log("LEft " + leftScreen.x + " Right " + rightScreen.x);
+		//rightScreen.x = leftScreen.x + (tv.currentScale * 4);
+		//Debug.Log("LEft " + leftScreen.x + " Right " + tv.currentScale * 4);
+	}
+
+	int beatsToPlay = 4;//how many beats to play
+	public void changeSubSettings()
+	{
+		float blockScaleNum = screenDistance/tv.scaleNum;
+		rightScreen.x = leftScreen.x + (blockScaleNum * beatsToPlay);
+		Debug.Log ("RS " + rightScreen.x);
+	}
+
+	public void moreBeats()
+	{
+		beatsToPlay++;
+		changeSubSettings ();
+	}
+
+	public void lessBeats()
+	{
+		if (beatsToPlay - 1 > 0) {
+			beatsToPlay--;
+			changeSubSettings ();
 		}
 	}
 }
