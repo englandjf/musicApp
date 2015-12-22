@@ -27,8 +27,12 @@ public class editSoundScript : MonoBehaviour {
 	{
 		GetComponentInChildren<Camera> ().enabled = false;
 		GetComponentInChildren<Canvas> ().enabled = false;
+		Debug.Log ("Sub " + subRef.name);
 		subRef.GetComponentInChildren<Camera> ().enabled = true;
 		subRef.GetComponentInChildren<Canvas> ().enabled = true;
 		subRef.GetComponent<trackVars> ().editing = false;
 	}
+
+	//Add options for enabling echo, chorus, etc
+
 }

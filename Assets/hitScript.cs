@@ -70,17 +70,17 @@ public class hitScript : MonoBehaviour {
 		}
 
 		//Double click
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && mouseOver) {
 			//Check for double click
 			if (!oneClick) {
 				oneClick = true;
 				timeDC = Time.time;
 			} else {
 				//double click true
-				Debug.Log("DC");
+				Debug.Log("saaa " + parentName);
 				oneClick = false;
 				GameObject.Find (parentName).GetComponentInChildren<Camera>().enabled = false;
-				GameObject.Find (parentName).GetComponentInChildren<Camera>().enabled = false;
+				GameObject.Find (parentName).GetComponentInChildren<Canvas>().enabled = false;
 				tv.editSound.GetComponentInChildren<Camera>().enabled = true;
 				tv.editSound.GetComponentInChildren<Canvas>().enabled = true;
 				tv.editing = true;

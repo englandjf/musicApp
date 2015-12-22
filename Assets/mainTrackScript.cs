@@ -32,6 +32,7 @@ public class mainTrackScript : MonoBehaviour {
             lengthChange();
         });
 
+
 		setupMenu ();
 
     }
@@ -92,9 +93,11 @@ public class mainTrackScript : MonoBehaviour {
 		inMenu = currentMenu.sub;
         menuOptions.value = gv.nextTrackIndex - 1;
 
+
 		//Edit Menu
 		GameObject tempEdit = (GameObject)Instantiate (editRef, new Vector3(tempSub.transform.position.x-50,tempSub.transform.position.y,tempSub.transform.position.z), this.transform.rotation);
 		tempEdit.GetComponent<editSoundScript> ().subRef = tempSub;
+		tempEdit.name = tempSub.name + "edit";
 		//Disable camera & canvas
 		tempSub.GetComponent<trackVars> ().editSound = tempEdit;
 		tempEdit.GetComponentInChildren<Camera> ().enabled = false;
